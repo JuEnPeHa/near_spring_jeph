@@ -64,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               'Please choose a language:',
             ),
-            DropdownButton<String>(
+            DropdownButtonFormField<String>(
                 hint: Text('Select a language'),
                 items: const [
                   DropdownMenuItem<String>(
@@ -121,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ? null
                     : () {
                         rpcFunction(
-                                nameForHelloWorld: "jeph.testnet",
+                                nameForHelloWorld: helloNEAR,
                                 methodName: country + suffix)
                             .then((value) {
                           helloNEAR = resolveData(
