@@ -30,10 +30,20 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  late final TextEditingController _nameController;
   final String suffix = "_near";
+  var name = "";
   var helloNEAR = "";
   var country = "";
   bool isFetched = false;
+
+  @override
+  void initState() {
+    _nameController = TextEditingController();
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
               'Hello NEAR Spring!',
               style: Theme.of(context).textTheme.headline6,
             ),
-            TextField(
+            TextFormField(
+              controller: _nameController,
               decoration: InputDecoration(
                 hintText: "Please input your name",
                 border:
@@ -57,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
               textAlign: TextAlign.center,
               onChanged: (value) {
                 setState(() {
-                  helloNEAR = value;
+                  name = value;
                 });
               },
             ),
@@ -121,13 +132,15 @@ class _MyHomePageState extends State<MyHomePage> {
                     ? null
                     : () {
                         rpcFunction(
-                                nameForHelloWorld: helloNEAR,
+                                nameForHelloWorld: _nameController.text,
                                 methodName: country + suffix)
                             .then((value) {
                           helloNEAR = resolveData(
                               value['result']['result'] as List<dynamic>);
                           isFetched = true;
+                          //helloNEAR = helloNEAR.replaceAll("\n", "\n\n");
                           setState(() {});
+                          //helloNEAR = "";
                         });
                       }),
                 child: Text('fetch data')),
